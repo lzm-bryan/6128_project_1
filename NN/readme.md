@@ -6,3 +6,7 @@ preprocess_fingerprint_dataset生成npy的训练数据测试数据包
 train_mlp训练保存预测和标签看对比
 viz_pred_vs_true看图
 train_stronger更强模型
+
+conda install scikit-learn
+
+pip install torch==2.7.0 torchvision==0.22.0 torchaudio==2.7.0 --index-url https://download.pytorch.org/whl/cu128
