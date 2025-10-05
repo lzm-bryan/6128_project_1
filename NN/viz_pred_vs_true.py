@@ -155,5 +155,5 @@ if __name__ == "__main__":
 
 # python viz_pred_vs_true.py --csv out_b1_reg/test_predictions.csv --floor-dir .\site1\B1 --out b1_predviz.png
 
-# 看一部分
+# 看一部分 最后一个参数显示点的数量
 # python viz_pred_vs_true.py --csv out_b1_reg/test_predictions.csv --floor-dir .\site1\B1 --max-n 1500

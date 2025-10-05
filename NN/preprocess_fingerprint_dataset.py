@@ -220,9 +220,10 @@ def main():
 if __name__ == "__main__":
     main()
 
+# 优先这个命令
 # python preprocess_fingerprint_dataset.py --csv b1_dataset.csv --task reg --label-space px --normalize-labels minmax --floor-dir .\site1\B1 --out-dir out_b1_reg
-# b1_dataset_dense
 
+# 这里他给了分类回归两个版本。但其实我们研究的是一个回归问题？
 # 怎么跑
 # 回归（预测像素坐标，0~1 归一化）
 # python preprocess_fingerprint_dataset.py \

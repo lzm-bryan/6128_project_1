@@ -303,7 +303,7 @@ def main():
 if __name__ == "__main__":
     main()
 
-
+# 我们其实应该是一个回归问题？
 # ## 回归（像素坐标）
 # python train_mlp.py --data-dir out_b1_reg --hidden 256,128 --epochs 80 --pred-csv test_predictions.csv
 

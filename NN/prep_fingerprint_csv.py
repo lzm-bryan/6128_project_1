@@ -462,7 +462,7 @@ def main():
 if __name__ == "__main__":
     main()
 
-
+# 优先第一个
 # # 1) 最常见：每 1s 窗口、0.5s 步进，生成回归标签（像素 & 米）
 # python prep_fingerprint_csv.py --floor-dir .\site1\B1 --out b1_dataset.csv
 #
@@ -475,5 +475,5 @@ if __name__ == "__main__":
 #   --grid-px 50 --out b1_grid_50px.csv
 
 
-# 想要更多？
+# 想要更多？下边的命令改参数生成更多数据dense
 # python prep_fingerprint_csv.py --floor-dir .\site1\B1 --source uncal_debiased --window-ms 1200 --hop-ms 200 --min-mag-pts 3 --out b1_dataset_dense.csv

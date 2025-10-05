@@ -381,5 +381,7 @@ if __name__ == "__main__":
 # # 2) XGBoost
 # python train_stronger.py --model xgb --data-dir out_b1_reg --pred-csv test_pred_xgb.csv
 #
+
+# 前边两个没跑，只关注transformer吧
 # # 3) FT-Transformer（深度模型）
 # python train_stronger.py --model ftt --data-dir out_b1_reg --hidden 256 --depth 4 --heads 8 --epochs 120
