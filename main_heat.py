@@ -14,15 +14,15 @@ from folium.plugins import HeatMap
 REPO_BASE = "https://github.com/location-competition/indoor-location-competition-20/blob/master/data"
 
 # 楼层清单：site1: B1 + F1~F4；site2: B1 + F1~F8
-# FLOOR_SETS = {
-#     "site1": ["B1", "F1", "F2", "F3", "F4"],
-#     "site2": ["B1", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8"],
-# }
-
 FLOOR_SETS = {
-    "site1": ["F1"],
-    "site2": ["F2"],
+    "site1": ["B1", "F1", "F2", "F3", "F4"],
+    "site2": ["B1", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8"],
 }
+
+# FLOOR_SETS = {
+#     "site1": ["F1"],
+#     "site2": ["F2"],
+# }
 
 CACHE_ROOT = "indoor_cache"
 OUT_HTML   = "multi_floor_gt_heat.html"
