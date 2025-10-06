@@ -439,13 +439,13 @@ def main():
     # 轴/范围
     ax.set_xlim(0, W); ax.set_ylim(0, H)
     ax.set_aspect('equal', adjustable='box')
-    ax.set_xlabel("x (px)")
-    ax.set_ylabel("y (px)")
+    # ax.set_xlabel("x (px)")
+    # ax.set_ylabel("y (px)")
     # 标题（提取一次 meta 即可）
     site = meta_any.get("SiteName", meta_any.get("SiteID", "Site"))
     floor = meta_any.get("FloorName", "Floor")
     title = f"{site} - {floor} -- {len(total_mag)} Mag: Avg {np.mean(total_mag):.0f} Waypoints: ~{total_wp}"
-    ax.set_title(title)
+    # ax.set_title(title)
 
     # colorbar
     cbar = fig.colorbar(lc, ax=ax, shrink=0.9)

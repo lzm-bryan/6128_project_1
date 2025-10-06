@@ -3,8 +3,9 @@
 test.py把B1中所有waypoint展示一下
 plot.py把geomap展示一下
 indoor.py单纯结合没有映射 生成的图(folium)很奇怪
-indoor_plus.py把坐标和map的json进行映射了,生成的图(folium)很好看了
+indoor_plus.py把坐标和map的json进行映射了,生成的图(folium)很好看了 (其实映射就是翻转一些，因为数据集坐标系已经是对齐了的)
 (bat文件批量)
+indoor_matplot_simple(matplot作图代码)但是现在的图好丑，可能要调一下参数
 
 geomag_heatnmap热力图尝试1(放弃了)
 geomag_trackmap参照论文格式生成图片
