@@ -9,18 +9,19 @@ from urllib.request import urlopen, Request
 import folium
 from folium.features import GeoJsonTooltip
 from folium.plugins import HeatMap
-# ================= 配置：多站点多楼层 =================
-# ...
-Y_FLIP_WAYPOINTS = True   # ➜ 轨迹是否执行 y 翻转（lat = H - y）
-Y_FLIP_HEAT      = True   # ➜ 热力点是否执行 y 翻转（建议与上保持一致）
 
 # ================= 配置：多站点多楼层 =================
 REPO_BASE = "https://github.com/location-competition/indoor-location-competition-20/blob/master/data"
 
 # 楼层清单：site1: B1 + F1~F4；site2: B1 + F1~F8
+# FLOOR_SETS = {
+#     "site1": ["B1", "F1", "F2", "F3", "F4"],
+#     "site2": ["B1", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8"],
+# }
+
 FLOOR_SETS = {
-    "site1": ["B1", "F1", "F2", "F3", "F4"],
-    "site2": ["B1", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8"],
+    "site1": ["F1"],
+    "site2": ["F2"],
 }
 
 CACHE_ROOT = "indoor_cache"
@@ -314,17 +315,14 @@ def _read_magnetometer(path: str) -> pd.DataFrame:
 
     return df
 
-# ================= 坐标变换 & GeoJSON =================
-# def _xy_to_leaflet(x, y, h):  # meters -> CRS.Simple (lon=x, lat=h-y)
-#     return [x, h - y]
 def _xy_to_leaflet(x, y, h, y_flip=True):
     """
-    米坐标 (x, y) -> Leaflet CRS.Simple
-    lon = x
-    lat = (H - y) if y_flip else y
+    修正关于 y=x 对称错误的正确版本
+    米坐标 (x, y) -> Leaflet CRS.Simple 坐标 [lat, lon]
     """
-    lat = (h - y) if y_flip else y
-    return [x, lat]  # [lon, lat]
+    lat = (y) if y_flip else y
+    lon = x
+    return [lon, lat]  # 注意顺序 [lat, lon]
 
 
 def _transform_geojson(gj: dict, map_h: float):
@@ -486,20 +484,14 @@ def main():
 
                 # 画 GT 折线
                 if not wp.empty:
-                    coords = []
-                    for x, y in zip(wp["x"], wp["y"]):
-                        lon, lat = _xy_to_leaflet(float(x), float(y), map_h, y_flip=Y_FLIP_WAYPOINTS)
-                        coords.append([lat, lon])  # folium 需要 [lat, lon]
+                    coords = [[ _xy_to_leaflet(x,y,map_h)[1], _xy_to_leaflet(x,y,map_h)[0] ] for x,y in zip(wp["x"], wp["y"])]
                     if len(coords) >= 2:
-                        folium.PolyLine(
-                            coords, weight=3, opacity=0.9,
-                            color=palette[color_i % len(palette)], tooltip=it["name"]
-                        ).add_to(gt_group)
+                        folium.PolyLine(coords, weight=3, opacity=0.9, color=palette[color_i % len(palette)],
+                                        tooltip=it["name"]).add_to(gt_group)
                     if DRAW_POINT_SAMPLE_EVERY and DRAW_POINT_SAMPLE_EVERY > 0:
                         for lat, lon in coords[::DRAW_POINT_SAMPLE_EVERY]:
-                            folium.CircleMarker(
-                                [lat, lon], radius=2, weight=1, fill=True, fill_opacity=0.9, color="#333333"
-                            ).add_to(gt_group)
+                            folium.CircleMarker([lat,lon], radius=2, weight=1, fill=True, fill_opacity=0.9,
+                                                color="#333333").add_to(gt_group)
                     color_i += 1
                     total_pts += len(coords)
 
@@ -553,7 +545,7 @@ def main():
                 # 转成 HeatMap 需要的 [lat, lon, weight]
                 heat_points = []
                 for _, r in xyB.iterrows():
-                    lon, lat = _xy_to_leaflet(float(r["x"]), float(r["y"]), map_h, y_flip=Y_FLIP_HEAT)
+                    lon, lat = _xy_to_leaflet(float(r["x"]), float(r["y"]), map_h)
                     heat_points.append([lat, lon, float(r["w"])])
 
                 HeatMap(
