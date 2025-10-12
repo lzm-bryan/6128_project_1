@@ -1,3 +1,44 @@
+Data & Outputs
+
+site1, site2: downloaded raw data.
+
+transform: analysis of model printouts on site1/B1 (model outputs inspected here).
+
+*.csv: produced by the command that consolidates the TXT files under each site*/floor into a single CSV.
+
+out* folders: packaged datasets (train/val/test etc.) created by the command below.
+
+Workflow
+
+Quick structure check in Excel
+Use txt2excel_sensors to extract feature values X and generate an .xlsx preview.
+Note: .xlsx is just for looking; it’s less convenient than .csv. Use the CSV generated in the next step for real work.
+
+Build labels + features CSV
+Run prep_fingerprint_csv to create a labeled feature CSV.
+You can control data granularity. --dense means more samples.
+Supports batch runs via .bat.
+
+Package NumPy datasets
+Run preprocess_fingerprint_dataset to generate .npy bundles for train/val/test.
+If you used dense above, use dense here as well.
+Supports batch runs via .bat.
+
+Train models
+
+train_mlp: trains a baseline MLP, saves predictions and labels for comparison.
+
+train_stronger: stronger model using a Transformer. Produces test_predictions.csv.
+
+Visualize results
+
+viz_pred_vs_true: plot predicted vs. true values to inspect performance.
+
+Requirements
+conda install scikit-learn
+pip install torch==2.7.0 torchvision==0.22.0 torchaudio==2.7.0 \
+  --index-url https://download.pytorch.org/whl/cu128
+
 这个文件夹进行深度学习
 
 site1 site2文件夹是下载下来的数据
