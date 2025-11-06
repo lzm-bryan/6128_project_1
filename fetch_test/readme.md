@@ -1,2 +1,1 @@
-fetch_cache.py测试爬取数据
-把数据从网站爬下来
+fetch_cache.py爬取数据
